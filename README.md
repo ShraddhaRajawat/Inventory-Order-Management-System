@@ -11,6 +11,8 @@ The system features transactional business logic (automatic stock deduction on o
 - **Live Frontend Web App (Vercel):** [https://inventory-order-management-system-beige.vercel.app/](https://inventory-order-management-system-beige.vercel.app/)
 - **Live Backend API (Render):** [https://inventory-backend-d6jx.onrender.com](https://inventory-backend-d6jx.onrender.com)
 - **Interactive API Documentation (Swagger Docs):** [https://inventory-backend-d6jx.onrender.com/docs](https://inventory-backend-d6jx.onrender.com/docs)
+- **Backend Docker Hub Image:** [https://hub.docker.com/r/shraddharajawat/inventory-backend](https://hub.docker.com/r/shraddharajawat/inventory-backend)
+
 
 ---
 
