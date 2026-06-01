@@ -34,6 +34,8 @@ const Icons = {
   )
 };
 
+const API_BASE = import.meta.env.VITE_API_URL || '';
+
 function App() {
   const [currentView, setCurrentView] = useState('dashboard'); // 'dashboard', 'products', 'customers', 'orders'
   
@@ -74,19 +76,19 @@ function App() {
   
   const fetchAllData = async () => {
     try {
-      const prodRes = await fetch('/api/products');
+      const prodRes = await fetch(`${API_BASE}/api/products`);
       const productsData = await prodRes.json();
       setProducts(Array.isArray(productsData) ? productsData : []);
 
-      const custRes = await fetch('/api/customers');
+      const custRes = await fetch(`${API_BASE}/api/customers`);
       const customersData = await custRes.json();
       setCustomers(Array.isArray(customersData) ? customersData : []);
 
-      const ordRes = await fetch('/api/orders');
+      const ordRes = await fetch(`${API_BASE}/api/orders`);
       const ordersData = await ordRes.json();
       setOrders(Array.isArray(ordersData) ? ordersData : []);
 
-      const statsRes = await fetch('/api/orders/stats');
+      const statsRes = await fetch(`${API_BASE}/api/orders/stats`);
       const statsData = await statsRes.json();
       setStats(statsData);
     } catch (err) {
@@ -126,13 +128,13 @@ function App() {
     try {
       let res;
       if (productModal.mode === 'create') {
-        res = await fetch('/api/products/', {
+        res = await fetch(`${API_BASE}/api/products/`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(productData)
         });
       } else {
-        res = await fetch(`/api/products/${productModal.data.id}`, {
+        res = await fetch(`${API_BASE}/api/products/${productModal.data.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(productData)
@@ -155,7 +157,7 @@ function App() {
   const handleProductDelete = async (id, name) => {
     if (!window.confirm(`Are you sure you want to delete product "${name}"?`)) return;
     try {
-      const res = await fetch(`/api/products/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/api/products/${id}`, { method: 'DELETE' });
       const resData = await res.json();
       if (!res.ok) {
         addToast(resData.detail || 'Failed to delete product.', 'error');
@@ -192,7 +194,7 @@ function App() {
     setErrors({});
 
     try {
-      const res = await fetch('/api/customers/', {
+      const res = await fetch(`${API_BASE}/api/customers/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(customerData)
@@ -213,7 +215,7 @@ function App() {
   const handleCustomerDelete = async (id, name) => {
     if (!window.confirm(`Are you sure you want to delete customer "${name}"?`)) return;
     try {
-      const res = await fetch(`/api/customers/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/api/customers/${id}`, { method: 'DELETE' });
       const resData = await res.json();
       if (!res.ok) {
         addToast(resData.detail || 'Failed to delete customer.', 'error');
@@ -283,7 +285,7 @@ function App() {
     };
 
     try {
-      const res = await fetch('/api/orders/', {
+      const res = await fetch(`${API_BASE}/api/orders/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -306,7 +308,7 @@ function App() {
   const handleOrderDelete = async (id) => {
     if (!window.confirm(`Are you sure you want to cancel and delete Order #${id}? Product stock levels will be restored.`)) return;
     try {
-      const res = await fetch(`/api/orders/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/api/orders/${id}`, { method: 'DELETE' });
       const resData = await res.json();
       if (!res.ok) {
         addToast(resData.detail || 'Failed to cancel order.', 'error');
